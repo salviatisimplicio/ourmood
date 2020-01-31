@@ -1,1 +1,2 @@
-A blog project with flask
+Flask kullanan küçük bir blog projesi 
+http://ourmood.pythonanywhere.com
