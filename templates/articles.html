@@ -6,6 +6,8 @@
   <title>Articles</title>
   <link rel="stylesheet" href="static/style.css">
   <link href="https://fonts.googleapis.com/css?family=Alata|Raleway&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Fruktur&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Comfortaa&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
 </head>
 
@@ -17,7 +19,7 @@
           <a href="/">OurMood</a>
         </div>
         <ul class="nav-links">
-          
+
           <a href="/articles">Articles</a>
           {% if session["logged_in"] %}
             <a href="/addarticle">Add Article</a>
@@ -47,25 +49,25 @@
      <div class="article" onclick="location.href='/article/{{article.id}}';">
       <a><i class="fas fa-pen-fancy"></i> Written by {{article.author}}</a>
       <a style="left: 340px;"><i class="far fa-clock"></i>{{article.created_time}}</a>
-      <center><img src="images/3.jpg">
+      <center><img src="https://live.staticflickr.com/3313/3332002085_11ccc19cca_b.jpg">
         <h1>{{article.title}}</h1>
-        <h2>{{article.content}}</h2>
+        <h2>{{article.visible}}</h2>
       </center>
     </div>
 
-    
+
     {% endfor %}
 
 
-    
 
-    
 
-    
 
-    
 
-    
+
+
+
+
+
   </div>
   <footer>
     <div class="footer">
