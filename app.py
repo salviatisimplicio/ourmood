@@ -20,10 +20,10 @@ app = Flask(__name__)
 app.secret_key= "ourblog"
 
 #mysql database connection
-app.config["MYSQL_HOST"] = "ourmood.mysql.pythonanywhere-services.com"
-app.config["MYSQL_USER"] = "ourmood"
-app.config["MYSQL_PASSWORD"] = "Ourmoodblog123*"
-app.config["MYSQL_DB"] = "ourmood$default"
+app.config["MYSQL_HOST"] = "*********"
+app.config["MYSQL_USER"] = "*********"
+app.config["MYSQL_PASSWORD"] = "*********"
+app.config["MYSQL_DB"] = "***********"
 app.config["MYSQL_CURSORCLASS"] = "DictCursor"
 
 mysql = MySQL(app)
