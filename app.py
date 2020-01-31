@@ -9,7 +9,7 @@ from functools import wraps
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if "logged_in" in session:                
+        if "logged_in" in session:
             return f(*args, **kwargs)
         else:
             return redirect(url_for("login"))
@@ -20,10 +20,10 @@ app = Flask(__name__)
 app.secret_key= "ourblog"
 
 #mysql database connection
-app.config["MYSQL_HOST"] = "sql7.freemysqlhosting.net"
-app.config["MYSQL_USER"] = "sql7320405"
-app.config["MYSQL_PASSWORD"] = "ZTh7N3S56w"
-app.config["MYSQL_DB"] = "sql7320405"
+app.config["MYSQL_HOST"] = "ourmood.mysql.pythonanywhere-services.com"
+app.config["MYSQL_USER"] = "ourmood"
+app.config["MYSQL_PASSWORD"] = "Ourmoodblog123*"
+app.config["MYSQL_DB"] = "ourmood$default"
 app.config["MYSQL_CURSORCLASS"] = "DictCursor"
 
 mysql = MySQL(app)
@@ -48,10 +48,10 @@ def register():
         mysql.connection.commit()
         cursor.close()
         return redirect(url_for("login"))
-            
-    else:  
+
+    else:
         return render_template("register.html")
-    
+
 
 
 #login page
@@ -71,8 +71,8 @@ def login():
                 session["logged_in"] = True
                 session["username"] = username
                 return redirect(url_for("mainpage"))
-            else:   
-                return redirect(url_for("register"))   
+            else:
+                return redirect(url_for("register"))
 
     return render_template("login.html")
 
@@ -83,7 +83,7 @@ def login():
 @app.route("/articles")
 def articles():
     cursor = mysql.connection.cursor()
-    sorgu = "SELECT * FROM articles"
+    sorgu = "SELECT * FROM articles ORDER BY id DESC"
     result = cursor.execute(sorgu)
     if result>0:
         articles=cursor.fetchall()
@@ -91,7 +91,7 @@ def articles():
 
     else:
         return render_template("articles.html")
-    
+
 
 # add article
 @app.route("/addarticle",methods=["GET","POST"])
@@ -102,10 +102,10 @@ def addarticle():
         content=request.form.get("content")
         visible=request.form.get("visible")
         username=session["username"]
-        
+
         cursor = mysql.connection.cursor()
-        sorgu = "INSERT INTO articles (title,author,content) VALUES (%s,%s,%s)"
-        cursor.execute(sorgu,(title,username,content,))
+        sorgu = "INSERT INTO articles (title,author,content,visible) VALUES (%s,%s,%s,%s)"
+        cursor.execute(sorgu,(title,username,content,visible,))
         mysql.connection.commit()
         cursor.close()
 
