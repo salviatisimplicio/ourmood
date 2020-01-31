@@ -3,9 +3,11 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Ana Sayfa</title>
+  <title>Add an Article</title>
   <link rel="stylesheet" href="static/style.css">
   <link href="https://fonts.googleapis.com/css?family=Alata|Raleway&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Fruktur&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Comfortaa&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
 </head>
 
@@ -17,7 +19,7 @@
           <a href="/">OurMood</a>
         </div>
         <ul class="nav-links">
-          
+
           <a href="/articles">Articles</a>
           {% if session["logged_in"] %}
             <a href="/addarticle">Add Article</a>
@@ -43,12 +45,11 @@
     </header>
 
     <div class="add-article">
-      <form class="article-form" action="/articles" method="post">
+      <form class="article-form" action="/addarticle" method="post">
         <h1>Add an Article</h1>
-        <input type="text" name="title" value="Tittle" onclick="if(this.value=='Tittle') this.value='';" onblur="if(this.value=='') this.value='Tittle';">
-        <input type="text" name="author" value="Written By" onclick="if(this.value=='Written By') this.value='';" onblur="if(this.value=='') this.value='Written By';">
-        <input type="text" name="visible" value="Visible Part (max. 200 chracter)" style="height: 100px;" onclick="if(this.value=='Visible Part (max. 200 chracter)') this.value='';" onblur="if(this.value=='') this.value='Visible Part (max. 200 chracter)';">
-        <input type="text" name="content" value="Full Text" style="height:200px;" onclick="if(this.value=='Full Text') this.value='';" onblur="if(this.value=='') this.value='Full Text';">
+        <input type="text" name="title" placeholder="Title" onclick="if(this.value=='') this.value='';" onblur="if(this.value=='') this.value='';">
+        <input type="text" name="visible" placeholder="Visible Part (max. 200 chracter)" style="height: 100px;" onclick="if(this.value=='') this.value='';" onblur="if(this.value=='') this.value='';">
+        <input type="text" name="content" placeholder="Full Text" style="height:200px;" onclick="if(this.value=='') this.value='';" onblur="if(this.value=='') this.value='';">
         <input type="submit" method="post" class="add-button" value="Add">
       </form>
 
