@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Ana Sayfa</title>
+  <link rel="stylesheet" href="static/style.css">
+  <link href="https://fonts.googleapis.com/css?family=Alata|Raleway&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
+</head>
+
+<body>
+  <div class="content">
+    <header>
+      <div class="mid-header">
+        <div class="logo">
+          <a href="/">OurMood</a>
+        </div>
+        <ul class="nav-links">
+          
+          <a href="/articles">Articles</a>
+          {% if session["logged_in"] %}
+            <a href="/addarticle">Add Article</a>
+          {% else %}
+          {% endif %}
+
+          {% if session["logged_in"] %}
+            <a href="/dashboard">Control Panel</a>
+          {% else %}
+          {% endif %}
+
+
+          <a href="/about">About</a>
+          <a href="/contact">Contact</a>
+          {% if session["logged_in"] %}
+            <a href="/logout">Log Out</a>
+           {% else %}
+           <a href="/login"><button>Sign Up</button></a>
+           {% endif %}
+
+        </ul>
+      </div>
+    </header>
+
+    <div class="add-article">
+      <form class="article-form" action="/articles" method="post">
+        <h1>Add an Article</h1>
+        <input type="text" name="title" value="Tittle" onclick="if(this.value=='Tittle') this.value='';" onblur="if(this.value=='') this.value='Tittle';">
+        <input type="text" name="author" value="Written By" onclick="if(this.value=='Written By') this.value='';" onblur="if(this.value=='') this.value='Written By';">
+        <input type="text" name="visible" value="Visible Part (max. 200 chracter)" style="height: 100px;" onclick="if(this.value=='Visible Part (max. 200 chracter)') this.value='';" onblur="if(this.value=='') this.value='Visible Part (max. 200 chracter)';">
+        <input type="text" name="content" value="Full Text" style="height:200px;" onclick="if(this.value=='Full Text') this.value='';" onblur="if(this.value=='') this.value='Full Text';">
+        <input type="submit" method="post" class="add-button" value="Add">
+      </form>
+
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer">
+      <div class="f-middle">
+        <p style="font-size:40px;">Follow Us</p>
+        <center><a href="#"><i class="fab fa-facebook-square"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-linkedin"></i></a>
+          <a href="#"><i class="fab fa-github"></i></a>
+          <a href="#"><i class="fab fa-reddit"></i></a>
+          <center>
+            <div class="border"></div>
+            <p>2020 © Created by SedAtmaca & CosmicOwl All Rights Reserved</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>

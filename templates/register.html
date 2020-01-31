@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Sign Up</title>
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.js" integrity="sha256-BTlTdQO9/fascB1drekrDVkaKd9PkwBymMlHOiG+qLI=" crossorigin="anonymous"></script>
+  <link href="https://fonts.googleapis.com/css?family=Alata|Raleway&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="static\form.css">
+</head>
+
+<body style="background-image: linear-gradient(120deg, #EAB543, #182C61);">
+  
+  <form class="login" action="/signup" method="post" style="width: 420px; height: 670px;">
+    <h1>Sign Up</h1>
+
+    <div class="login-text">
+      <input type="text" name="name">
+      <span data-placeholder="Name"></span>
+    </div>
+
+    <div class="login-text">
+      <input type="email" name="email">
+      <span data-placeholder="E-Mail"></span>
+    </div>
+
+    <div class="login-text">
+      <input type="text" name="username">
+      <span data-placeholder="Username (Nickname in Website)"></span>
+    </div>
+
+    <div class="login-text">
+      <input type="password" name="password">
+      <span data-placeholder="Password"></span>
+    </div>
+
+    <div class="login-text">
+      <input type="password" name="confirm">
+      <span data-placeholder="Confirm"></span>
+    </div>
+
+    <input type="submit" class="login-button" value="Sign Up" method="post" style="background-image: linear-gradient(120deg, #EAB543, #182C61);">
+
+  </form>
+
+  <script type="text/javascript">
+    $(".login-text input").on("focus", function() {
+      $(this).addClass("focus");
+    });
+
+    $(".login-text input").on("blur", function() {
+      if ($(this).val() == "")
+        $(this).removeClass("focus");
+    });
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Articles</title>
+  <link rel="stylesheet" href="static/style.css">
+  <link href="https://fonts.googleapis.com/css?family=Alata|Raleway&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
+</head>
+
+<body>
+  <div class="content">
+     <header>
+      <div class="mid-header">
+        <div class="logo">
+          <a href="/">OurMood</a>
+        </div>
+        <ul class="nav-links">
+          
+          <a href="/articles">Articles</a>
+          {% if session["logged_in"] %}
+            <a href="/addarticle">Add Article</a>
+          {% else %}
+          {% endif %}
+
+          {% if session["logged_in"] %}
+            <a href="/dashboard">Control Panel</a>
+          {% else %}
+          {% endif %}
+
+
+          <a href="/about">About</a>
+          <a href="/contact">Contact</a>
+          {% if session["logged_in"] %}
+            <a href="/logout">Log Out</a>
+           {% else %}
+           <a href="/login"><button>Sign Up</button></a>
+           {% endif %}
+
+        </ul>
+      </div>
+    </header>
+
+<br><br><br><br><br><br><br><br>
+<h1>Add an article</h1>
+<form  method="post">
+
+<div >
+    <label for="title">Title</label>
+    <input type="input" id="title" name="title">
+  </div>
+
+
+    <label for="content">Content</label>
+    <textarea " id="content" rows="7" name="content"></textarea>
+  </div>
+    <input type="submit" value="Send" method="post">
+</form>
+
+  
+  <footer>
+    <div class="footer">
+      <div class="f-middle">
+        <p style="font-size:40px;">Follow Us</p>
+        <center><a href="#"><i class="fab fa-facebook-square"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-linkedin"></i></a>
+          <a href="#"><i class="fab fa-github"></i></a>
+          <a href="#"><i class="fab fa-reddit"></i></a>
+          <center>
+            <div class="border"></div>
+            <p>2020 © Created by SedAtmaca & CosmicOwl All Rights Reserved</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>
