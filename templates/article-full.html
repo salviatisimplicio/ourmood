@@ -4,8 +4,10 @@
 <head>
   <meta charset="utf-8">
   <title>{{article.title}}</title>
-  <link rel="stylesheet" href="static/style.css">
+  <link rel="stylesheet" href="/static/style.css">
   <link href="https://fonts.googleapis.com/css?family=Alata|Raleway&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Fruktur&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Comfortaa&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
 </head>
 
@@ -17,7 +19,7 @@
           <a href="/">OurMood</a>
         </div>
         <ul class="nav-links">
-          
+
           <a href="/articles">Articles</a>
           {% if session["logged_in"] %}
             <a href="/addarticle">Add Article</a>
@@ -46,7 +48,7 @@
       <a style="left:10px;"><i class="fas fa-pen-fancy"></i> {{article.author}}</</a>
       <a style="left:220px;"><i class="far fa-clock"></i> {{article.created_time}}</a>
       <h1>{{article.title}}</</h1>
-      <center><img src="images/1.jpg" alt=""></center>
+      <center><img src="https://live.staticflickr.com/3313/3332002085_11ccc19cca_b.jpg" alt=""></center>
       <h2>{{article.content}}</h2>
     </div>
 
