@@ -97,19 +97,51 @@ def articles():
 @app.route("/addarticle",methods=["GET","POST"])
 @login_required
 def addarticle():
-    if request.method=="POST":
-        title=request.form.get("title")
-        content=request.form.get("content")
-        visible=request.form.get("visible")
-        username=session["username"]
+    cur = mysql.connection.cursor()
+    sor = "select * from users where username = %s"
+    cur.execute(sor,(session["username"],))
+    data = cur.fetchone()
+    if data["statu"]=="editor" or data["statu"]=="admin":
+        if request.method=="POST":
+            title=request.form.get("title")
+            content=request.form.get("content")
+            visible=request.form.get("visible")
+            username=session["username"]
 
+            cursor = mysql.connection.cursor()
+            sorgu = "INSERT INTO articles (title,author,content,visible) VALUES (%s,%s,%s,%s)"
+            cursor.execute(sorgu,(title,username,content,visible,))
+            mysql.connection.commit()
+            cursor.close()
+
+            return render_template("add-article.html")
+        else:
+            return render_template("add-article.html")
+
+    else:
+        return redirect(url_for("mainpage"))
+
+
+@app.route("/dashboard")
+@login_required
+def dashboard():
+    cur = mysql.connection.cursor()
+    sor = "select * from users where username = %s"
+    cur.execute(sor,(session["username"],))
+    data = cur.fetchone()
+    if data["statu"]=="editor" or data["statu"]=="admin":
         cursor = mysql.connection.cursor()
-        sorgu = "INSERT INTO articles (title,author,content,visible) VALUES (%s,%s,%s,%s)"
-        cursor.execute(sorgu,(title,username,content,visible,))
-        mysql.connection.commit()
-        cursor.close()
+        sorgu = "Select * from articles where author = %s"
+        result = cursor.execute(sorgu,(session["username"],))
 
-    return render_template("add-article.html")
+        if result > 0:
+            articles = cursor.fetchall()
+            return render_template("dashboard.html",articles = articles)
+        else:
+            return render_template("dashboard.html")
+    else:
+        return redirect(url_for("mainpage"))
+
 
 #article details
 @app.route("/article/<string:id>")
@@ -124,15 +156,156 @@ def article_full(id):
     else:
         return render_template("article-full.html")
 
+
+
+
+
+
+
+#delete article
+@app.route("/delete/<string:id>")
+@login_required
+def delete(id):
+    cursor = mysql.connection.cursor()
+    sorgu = "Select * from articles where author = %s and id = %s"
+    result = cursor.execute(sorgu,(session["username"],id))
+    if result>0:
+        deletesorgu = "Delete from articles where id = %s "
+        cursor.execute(deletesorgu,(id,))
+        mysql.connection.commit()
+        return redirect(url_for("dashboard"))
+    else:
+        return redirect(url_for("mainpage"))
+#update
+@app.route("/edit/<string:id>")
+@login_required
+def update(id):
+    return render_template("update.html")
+
+
+
+
+
+
+@app.route("/articleadminnnnnnnnnnnnn")
+@login_required
+def articleadmin():
+    cur = mysql.connection.cursor()
+    sor = "select * from users where username = %s"
+    cur.execute(sor,(session["username"],))
+    data = cur.fetchone()
+    if data["statu"]=="admin":
+        cursor = mysql.connection.cursor()
+        sorgu = "Select * from articles"
+        result = cursor.execute(sorgu)
+
+        if result > 0:
+            articles = cursor.fetchall()
+            return render_template("articleadmin.html",articles = articles)
+        else:
+            return render_template("articleadmin.html")
+    else:
+        return redirect(url_for("mainpage"))
+
+
+
+@app.route("/deleteeeeeeeeeeee/<string:id>")
+@login_required
+def deletee(id):
+    cur = mysql.connection.cursor()
+    sor = "select * from users where username = %s"
+    cur.execute(sor,(session["username"],))
+    data = cur.fetchone()
+    if data["statu"]=="admin":
+        cursor = mysql.connection.cursor()
+        deletesorgu = "Delete from articles where id = %s"
+        cursor.execute(deletesorgu,(id,))
+        mysql.connection.commit()
+        return redirect(url_for("articleadmin"))
+    else:
+        return redirect(url_for("mainpage"))
+
+
+
+@app.route("/useradminnnnnnnnnnnnn")
+@login_required
+def useradmin():
+    cur = mysql.connection.cursor()
+    sor = "select * from users where username = %s"
+    cur.execute(sor,(session["username"],))
+    data = cur.fetchone()
+
+    if data["statu"]=="admin":
+        cursor = mysql.connection.cursor()
+        sorgu = "Select * from users"
+        result = cursor.execute(sorgu)
+
+        if result > 0:
+            users = cursor.fetchall()
+            return render_template("useradmin.html",users = users)
+        else:
+            return render_template("useradmin.html")
+
+    else:
+        return redirect(url_for("mainpage"))
+
+@app.route("/deleteeeeeeeeeeeeuser/<string:id>")
+@login_required
+def deleteuser(id):
+    cur = mysql.connection.cursor()
+    sor = "select * from users where username = %s"
+    cur.execute(sor,(session["username"],))
+    data = cur.fetchone()
+    if data["statu"]=="admin":
+        cursor = mysql.connection.cursor()
+        deleteusersorgu = "Delete from users where id = %s"
+        cursor.execute(deleteusersorgu,(id,))
+        mysql.connection.commit()
+        return redirect(url_for("useradmin"))
+    else:
+        return redirect(url_for("mainpage"))
+
+
+@app.route("/seteditor/<string:id>")
+@login_required
+def seteditor(id):
+    cur = mysql.connection.cursor()
+    sor = "select * from users where username = %s"
+    cur.execute(sor,(session["username"],))
+    data = cur.fetchone()
+    if data["statu"]=="admin":
+        cursor = mysql.connection.cursor()
+        seteditor = "UPDATE users SET statu='editor' WHERE id=%s"
+        cursor.execute(seteditor,(id,))
+        mysql.connection.commit()
+        return redirect(url_for("useradmin"))
+    else:
+        return redirect(url_for("mainpage"))
+
+
+@app.route("/setadmin/<string:id>")
+@login_required
+def setadmin(id):
+    cur = mysql.connection.cursor()
+    sor = "select * from users where username = %s"
+    cur.execute(sor,(session["username"],))
+    data = cur.fetchone()
+    if data["statu"]=="admin":
+        cursor = mysql.connection.cursor()
+        setadmin = "UPDATE users SET statu='admin' WHERE id=%s"
+        cursor.execute(setadmin,(id,))
+        mysql.connection.commit()
+        return redirect(url_for("useradmin"))
+    else:
+        return redirect(url_for("mainpage"))
+
+
+
 #logout
 @app.route("/logout")
 def logout():
     session.clear()
     return redirect(url_for("mainpage"))
-
-@app.route("/dashboard")
-def dashboard():
-    return render_template("dashboard.html")
 
 @app.route("/contact")
 def contact():
@@ -144,7 +317,6 @@ def about():
 
 if __name__ == "__main__":
     app.run(debug=True)
-
 
 
 
