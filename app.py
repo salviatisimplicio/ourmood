@@ -15,15 +15,17 @@ def login_required(f):
             return redirect(url_for("login"))
     return decorated_function
 
+
+
 #create flask app
 app = Flask(__name__)
 app.secret_key= "ourblog"
 
 #mysql database connection
-app.config["MYSQL_HOST"] = "*********"
-app.config["MYSQL_USER"] = "*********"
-app.config["MYSQL_PASSWORD"] = "*********"
-app.config["MYSQL_DB"] = "***********"
+app.config["MYSQL_HOST"] = "ourmood.mysql.pythonanywhere-services.com"
+app.config["MYSQL_USER"] = "ourmood"
+app.config["MYSQL_PASSWORD"] = "Ourmoodblog123*"
+app.config["MYSQL_DB"] = "ourmood$default"
 app.config["MYSQL_CURSORCLASS"] = "DictCursor"
 
 mysql = MySQL(app)
@@ -144,15 +146,20 @@ def dashboard():
 
 
 #article details
-@app.route("/article/<string:id>")
+@app.route("/article/<string:id>",methods=["GET","POST"])
 def article_full(id):
     cursor = mysql.connection.cursor()
     sorgu = "Select * from articles where id = %s"
     result = cursor.execute(sorgu,(id,))
 
+    cursor2=mysql.connection.cursor()
+    sorgu2="Select * from comments where toarticle=%s"
+    cursor2.execute(sorgu2,(id,))
+
     if result > 0 :
         article = cursor.fetchone()
-        return render_template("article-full.html",article = article)
+        comments = cursor2.fetchall()
+        return render_template("article-full.html",article = article,comments=comments)
     else:
         return render_template("article-full.html")
 
@@ -160,6 +167,22 @@ def article_full(id):
 
 
 
+@app.route("/addcomment/<string:id>",methods=["GET","POST"])
+@login_required
+def addcomment(id):
+        #tourl= str(request.path)
+        #tourllist=tourl.split("/")
+        #toarticle=tourllist[2]
+
+        content=request.form.get("content")
+        username=session["username"]
+        cur= mysql.connection.cursor()
+        sor = "INSERT INTO comments (author,content,toarticle) VALUES (%s,%s,%s)"
+        cur.execute(sor,(username,content,id,))
+        mysql.connection.commit()
+        cur.close()
+
+        return redirect(url_for("article_full", id= id))
 
 
 #delete article
@@ -317,6 +340,7 @@ def about():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
 
 
 
